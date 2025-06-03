@@ -47,24 +47,3 @@ def configure_logging():
         filter=lambda record: "request_id" not in record["extra"]
     )
     
-    # Add file handler if log_file is configured
-    if settings.log_file:
-        # Add file handler with request_id
-        logger.add(
-            settings.log_file,
-            rotation="10 MB",
-            retention="10 days",
-            level=settings.log_level,
-            format=file_format_with_request_id,
-            filter=lambda record: "request_id" in record["extra"]
-        )
-        
-        # Add file handler without request_id
-        logger.add(
-            settings.log_file,
-            rotation="10 MB",
-            retention="10 days",
-            level=settings.log_level,
-            format=settings.log_format,
-            filter=lambda record: "request_id" not in record["extra"]
-        )
